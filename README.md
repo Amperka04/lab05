@@ -1,5 +1,9 @@
 ## Laboratory work V
 
+
+[![Coverage Status](https://coveralls.io/repos/github/Amperka04/lab05/badge.svg)](https://coveralls.io/github/Amperka04/lab05)
+
+
 Данная лабораторная работа посвещена изучению фреймворков для тестирования на примере **GTest**
 
 ```sh
