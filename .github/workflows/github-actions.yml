@@ -34,8 +34,12 @@ jobs:
       - name: Generate coverage report
         run: |
           cd build
-          lcov -c -d banking/CMakeFiles/account.dir -d banking/CMakeFiles/transaction.dir \ --output-file coverage.info
-          lcov --extract coverage.info '*/banking/*' --output-file coverage.info
+          lcov -c -d banking/CMakeFiles/account.dir -o account.info
+          lcov -c -d banking/CMakeFiles/transaction.dir -o transaction.info
+          lcov -a account.info -a transaction.info -o coverage.info
+          lcov --extract coverage.info '*/banking/*' -o coverage_filtered.info
+          mv coverage_filtered.info coverage.info
+
       - name: Coveralls GitHub Action
         uses: coverallsapp/github-action@v2
         with:
