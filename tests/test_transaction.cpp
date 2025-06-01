@@ -40,21 +40,16 @@ TEST(Transaction, SimpleTest) {
 }
 
 TEST(TransactionTest, DebitSuccess) {
-    MockAccount mock_account;
+    AccountMock mock_account(1, 500); // Используем AccountMock вместо MockAccount
     Transaction transaction;
     
     // Настраиваем mock:
-    // - Баланс должен быть больше суммы списания
     EXPECT_CALL(mock_account, GetBalance())
-        .WillOnce(Return(500));  // Баланс 500
+        .WillOnce(testing::Return(500));  // Явно указываем пространство имен
     
-    // Ожидаем вызов ChangeBalance с отрицательной суммой
     EXPECT_CALL(mock_account, ChangeBalance(-300))
         .Times(1);
     
-    // Вызываем тестируемый метод
     bool result = transaction.Debit(mock_account, 300);
-    
-    // Проверяем результат
     EXPECT_TRUE(result);
 }
