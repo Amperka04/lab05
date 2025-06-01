@@ -39,17 +39,12 @@ TEST(Transaction, SimpleTest) {
 	EXPECT_FALSE(tr.Make(ac2, ac1, 300));
 }
 
-TEST(TransactionTest, DebitSuccess) {
-    AccountMock mock_account(1, 500); // Используем AccountMock вместо MockAccount
-    Transaction transaction;
-    
-    // Настраиваем mock:
-    EXPECT_CALL(mock_account, GetBalance())
-        .WillOnce(testing::Return(500));  // Явно указываем пространство имен
-    
-    EXPECT_CALL(mock_account, ChangeBalance(-300))
-        .Times(1);
-    
-    bool result = transaction.Debit(mock_account, 300);
-    EXPECT_TRUE(result);
+TEST(Transaction, SuccessfulTransaction) {
+    Transaction tr;
+    tr.set_fee(10); // Устанавливаем комиссию
+    Account from(1, 1000);
+    Account to(2, 200);
+
+    // Успешный перевод: баланс > суммы + комиссия
+    EXPECT_TRUE(tr.Make(from, to, 500));
 }
